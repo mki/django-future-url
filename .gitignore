@@ -1,4 +1,5 @@
 .DS_STORE
-*.pyc
+*.py[c,o]
+*.egg-info
 .idea
 build
