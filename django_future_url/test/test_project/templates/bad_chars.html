@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block left_slot %}
+    <div class="navigation-left-title">
+        Конкуренты
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="site-actions">
+        <span class="label">{{competitor.title}}</span>
+    </div>
+
+    <div id="manage-tabs">
+    {{form.errors}}
+        <form method="post" action="{% url add_competitor %}">{% csrf_token %}
+            {{form.as_p}}
+          <input type="submit" value="Сохранить">
+        </form>
+    </div>
+
+{% endblock %}

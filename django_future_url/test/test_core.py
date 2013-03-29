@@ -2,6 +2,7 @@ import codecs
 import os
 import subprocess
 import unittest
+from django_future_url import core
 from django_future_url.core import parse_file
 
 
@@ -33,3 +34,6 @@ class SimpleTest(ModernizeUrlTagTestCase):
 
     def test_should_not_be_upgraded(self):
         self.assertTemplateFixed('should_not_be_upgraded')
+
+    def test_make_me_magic(self):
+        core.make_me_magic(write=False)
