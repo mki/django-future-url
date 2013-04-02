@@ -88,11 +88,11 @@ def make_me_magic(write):
             if has_deprecated_tag(file_content):
                 found = True
                 log.info(file_path.replace(CURRENT_PATH + '/', ''))
-                new_content = parse_file(file_content)
+                new_content = parse_file(file_content.decode('utf-8'))
 
                 if write:
                     t_file.seek(0)
-                    t_file.write(new_content)
+                    t_file.write(new_content.encode('utf-8'))
                     log.info('    File updated')
 
     if not found:
