@@ -21,3 +21,7 @@ Test --write behavior:
       Proposed replace: {% url path.to.view arg, arg2 %} -> {% url 'path.to.view' arg arg2 %}
       Need to add {% load url from future %}
       File updated
+  templates/bad_chars.html
+      Proposed replace: {% url add_competitor %} -> {% url 'add_competitor' %}
+      Need to add {% load url from future %}
+      File updated
