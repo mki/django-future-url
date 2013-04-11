@@ -16,12 +16,12 @@ Test --write behavior:
       Proposed replace: {% url someview %} -> {% url 'someview' %}
       Need to add {% load url from future %}
       File updated
+  templates/bad_chars.html
+      Proposed replace: {% url add_competitor %} -> {% url 'add_competitor' %}
+      Need to add {% load url from future %}
+      File updated
   templates/comma.html
       Comma separated attributes in url tag are no longer supported.
       Proposed replace: {% url path.to.view arg, arg2 %} -> {% url 'path.to.view' arg arg2 %}
-      Need to add {% load url from future %}
-      File updated
-  templates/bad_chars.html
-      Proposed replace: {% url add_competitor %} -> {% url 'add_competitor' %}
       Need to add {% load url from future %}
       File updated

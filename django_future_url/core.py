@@ -50,7 +50,8 @@ r_depr_url_finder = re.compile(r" {% \s* url \s+ [^\"\'\s]+ \s+ ", re_flags)
 # And url tag
 r_url_finder = re.compile(r"{% \s* url \s+ ", re_flags)
 # {% load url from future %}
-r_load_finder = re.compile(r" {% \s* load \s+ url \s+ from \s+ future \s* %} ", re_flags)
+r_load_finder = re.compile(r" {% \s* load \s+ url \s+ from \s+ future \s* %} ",
+                           re_flags)
 # {% extends ... %} tag
 r_extends_finder = re.compile(r"{% \s* extends \s* \S+ \s* %}", re_flags)
 
@@ -76,7 +77,8 @@ r_load_extends_replace = """\g<template_head>\n\n%s\n""" % load_tag
 def make_me_magic(write):
     """ Main script.
 
-    Here we find templates, replace old-style url tags and add future import where necessary.
+    Here we find templates, replace old-style url tags and 
+    add future import where necessary.
     """
     # Search for files with appropriate extensions.
     log.info('Files needing modification:')
@@ -84,7 +86,8 @@ def make_me_magic(write):
     for file_path in find_files(os.walk(CURRENT_PATH)):
         with open(file_path, 'r+b') as t_file:
             file_content = t_file.read().decode('utf-8')
-            # Checking for presence of old-style tags and absence of load url from future
+            # Checking for presence of old-style tags and
+            # absence of load url from future
             if has_deprecated_tag(file_content):
                 found = True
                 log.info(file_path.replace(CURRENT_PATH + '/', ''))
@@ -99,7 +102,8 @@ def make_me_magic(write):
         log.info('All files are up to date. Congrats!')
     else:
         if not write:
-            log.info('No actual changes made. Run future_url --write to fix files right now.')
+            log.info('No actual changes made.'
+                     ' Run future_url --write to fix files right now.')
 
 
 
@@ -116,11 +120,13 @@ def parse_file(file_content):
     # Handle files with deprecated url tags
     if r_depr_url_finder.search(file_content):
         if check_comma_in_attributes(file_content):
-            log.warn("    Comma separated attributes in url tag are no longer supported.")
+            log.warn("    Comma separated attributes in url tag "
+                     "are no longer supported.")
         file_content = process_url_tag(file_content)
 
     # Check if load url form future is present and add if necessary
-    if r_url_finder.search(file_content) and not r_load_finder.search(file_content):
+    if (r_url_finder.search(file_content) and
+        not r_load_finder.search(file_content)):
         file_content = process_load_tag(file_content)
         log.info("    Need to add {% load url from future %}")
 
@@ -134,7 +140,8 @@ def url_replacer(match):
     if ',' in match.group('attrs'):
         matches['attrs'] = re.sub('\s*,\s*', ' ', match.group('attrs'))
     repl = "{before}'{name}'{attrs}{after}".format(**matches)
-    logging.info("    Proposed replace: {0} -> {1}".format(match.group(0), repl))
+    logging.info("    Proposed replace: {0} -> {1}".format(match.group(0),
+                                                           repl))
     return repl
 
 
@@ -142,7 +149,8 @@ def process_load_tag(html):
     """ Add {% load url from future %} """
 
     if r_extends_finder.search(html):
-        return r_load_extends_pattern.sub(r_load_extends_replace, html, count=1)
+        return r_load_extends_pattern.sub(r_load_extends_replace,
+                                          html, count=1)
     else:
         return "{load_tag}\n{html}".format(
             load_tag=load_tag,
@@ -170,7 +178,8 @@ def has_deprecated_tag(html):
     has_load_tag = r_load_finder.search(html)
 
     # No load tag and (deprecated) url tag present
-    return not has_load_tag and (r_depr_url_finder.search(html) or r_url_finder.search(html))
+    return (not has_load_tag and
+            (r_depr_url_finder.search(html) or r_url_finder.search(html)))
 
 
 def search_template_files(dirname, fnames):
