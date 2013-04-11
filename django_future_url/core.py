@@ -82,13 +82,13 @@ def make_me_magic(write):
     log.info('Files needing modification:')
     found = False
     for file_path in find_files(os.walk(CURRENT_PATH)):
-        with open(file_path, 'r+') as t_file:
-            file_content = t_file.read()
+        with open(file_path, 'r+b') as t_file:
+            file_content = t_file.read().decode('utf-8')
             # Checking for presence of old-style tags and absence of load url from future
             if has_deprecated_tag(file_content):
                 found = True
                 log.info(file_path.replace(CURRENT_PATH + '/', ''))
-                new_content = parse_file(file_content.decode('utf-8'))
+                new_content = parse_file(file_content)
 
                 if write:
                     t_file.seek(0)
