@@ -176,6 +176,6 @@ def has_deprecated_tag(html):
 def search_template_files(dirname, fnames):
     """ Search for suitable files """
 
-    for file_name in fnames:
+    for file_name in sorted(fnames):
         if os.path.splitext(file_name)[1] in file_formats:
             yield os.path.join(dirname, file_name)
